@@ -2,6 +2,9 @@
 %KLongnecker 2/25/09; edited EKujawinski 2/27/09; KLongnecker 9/2/09
 %KLongnecker 8/9/10; KLongnecker 1/24/2013; KLongnecker 7/5/2013
 %
+% NOTE: The database required to run this code exceeds GitHub's limits on
+% file sizes. It is available by request from Krista Longnecker.
+%
 %%contact information:
 % Krista Longnecker
 % Department of Marine Chemistry and Geochemistry
