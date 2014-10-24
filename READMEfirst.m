@@ -3,7 +3,9 @@
 %KLongnecker 8/9/10; KLongnecker 1/24/2013; KLongnecker 7/5/2013
 %
 % NOTE: The database required to run this code exceeds GitHub's limits on
-% file sizes. It is available by request from Krista Longnecker.
+% file sizes. The database is available by anonymous FTP at this location:
+% ftp://ftp.whoi.edu/pub/users/klongnecker/LabFiles
+% The name of the file is: LongneckerKujawinski_fullCompoundList.mat
 %
 %%contact information:
 % Krista Longnecker
