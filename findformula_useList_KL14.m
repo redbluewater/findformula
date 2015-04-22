@@ -1,19 +1,7 @@
 function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
 %function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
 %
-% original version of this algorithm published as: Kujawinski and Behn. 2006. 
-% Automated analysis of electrospray ionization Fourier-transform ion 
-% cyclotron resonance mass spectra of natural organic matter. 
-% Analytical Chemistry 78:4363-4373. 
-% Largest change has been to use a database to find the formulas rather
-% than recalculating all of the possible formulas each time.
 %
-% contact information:
-% Elizabeth Kujawinski or Krista Longnecker
-% Department of Marine Chemistry and Geochemistry
-% Woods Hole Oceanographic Institution
-% ekujawinski@whoi.edu , klongnecker@whoi.edu
-
 %%%input the following variables:
 % peak_mass - list of masses 
 % peak_int - intensity of each peak (can currently be set to zeros)
@@ -44,6 +32,13 @@ function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, 
 % formula : the elemental formulas for the peak list [C H O N C13 S P Na Error].
 % elementOrder : a reminder of the order of elements by column
 %
+% original version of this algorithm published as: Kujawinski and Behn. 2006. 
+% Automated analysis of electrospray ionization Fourier-transform ion 
+% cyclotron resonance mass spectra of natural organic matter. 
+% Analytical Chemistry 78:4363-4373. 
+% Largest change has been to use a database to find the formulas rather
+% than recalculating all of the possible formulas each time.
+%
 % Elizabeth Kujawinski Behn, May 2005
 % Last updated: November 6, 2005
 % updated version received by K Longnecker from LK 8/8/08
@@ -51,6 +46,7 @@ function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, 
 %%KL added 9/12/08: put in a check to make sure that the format of the data 
 %%are as needed for this function. peak_int and peak_mass both need to be 
 %%multiple rows and one column
+%%
 %KL 1/2/09 - change the list sorting to consider both the minimum number of
 %non-oxygen heteroatoms AND the lowest error - get around the case where
 %can have different formulas with the same number of non-oxygen heteroatoms
@@ -76,9 +72,11 @@ function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, 
 %the wrong version yesterday
 %KL 5/11/09 - changing the neutral mass check yet again
 %KL 9/23/09 - change useMATfile to send out startform as double precision
-%KL 9/1/2011 - correcting problem where in one of the calculations, the 
-%error calculation was multiplied by 1e-6, rather than 1e6, therefore the 
-%error calculations were off by 1e-12.
+%KL 9/1/2011 - correcting problem found by Dan Baluha (Univ. of Maryland)
+%where in one of the calculations, the error calculation was multiplied by
+%1e-6, rather than 1e6, therefore the error calculations were off by 1e-12.
+%KL 4/22/2015 - Nikola Tolic (PNNL) found an error in the formula checking
+%where we reference the wrong mass. v14 corrects that error
 
 %check to be sure there are two variables going out
 if nargout~=2
@@ -265,7 +263,7 @@ for p=1:f
                                 startform = formula(low_m,1:length(elements));
                                 numGps = round(abs(ftemp(t,1)-ftemp(1,1))/grp(x,:));
                                 newform = startform + numGps*relations(x,:);                                  
-                                checknew = Check7GR_KL2(newform, peak_mass(relpk));       
+                                checknew = Check7GR_KL2(newform, peak_mass(p)); %%KL corrected 4/22/2015      
                                 %KL corrected the following line 8/31/2011...note the sign of 1e6
                                 %errornew = abs((peak_mass(p)-newform*elements)/(newform*elements))*1e-06; 
                                 errornew = abs((peak_mass(p)-newform*elements)/(newform*elements))*1e06;
@@ -280,7 +278,7 @@ for p=1:f
             end % ends formula loop
         end % ends GrpdiffK loop (was called the y loop, but I (KL) keep having to look up 'y')
     end % ends high mass loop
-    if showProgress
+    if showProgress && ~rem(p,250)
         fprintf('Finished Peak %1.0f of %1.0f\n',p,f)
     end
     

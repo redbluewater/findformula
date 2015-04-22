@@ -1,6 +1,7 @@
 %Writing up the pipeline for external FTMS users
 %KLongnecker 2/25/09; edited EKujawinski 2/27/09; KLongnecker 9/2/09
-%KLongnecker 8/9/10; KLongnecker 1/24/2013; KLongnecker 7/5/2013
+%KLongnecker 8/9/10; KLongnecker 1/24/2013; KLongnecker 7/5/2013; KL
+%4/22/2105 to correct minor error in findformula
 %
 % NOTE: The database required to run this code exceeds GitHub's limits on
 % file sizes. The database is available by anonymous FTP at this location:
@@ -64,7 +65,7 @@ IUPACpeak = Peaks - H + elec; % for positive ion mode, Na-adducts are also likel
 fDir = 'C:\Documents and Settings\Krista\My Documents\MSdataAnalysis';
 path(path,fDir);
 load LongneckerKujawinski_fullCompoundList.mat
-[formulas elementOrder] = findformula_useList_KL12(IUPACpeak, zeros(size(IUPACpeak)), 1, 20, 500,fullCompoundList,'HAcap',1);
+[formulas elementOrder] = findformula_useList_KL14(IUPACpeak, zeros(size(IUPACpeak)), 1, 20, 500,fullCompoundList,'HAcap',1);
 
 %3 Now go through and find the C13-containing formulas
 FormulasC13 = quick13C_KL_1(formulas,IUPACpeak,0);
