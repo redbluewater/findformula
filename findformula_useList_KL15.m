@@ -1,5 +1,5 @@
-function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
-%function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
+function [formula elementOrder] = findformula_useList_KL15(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
+%function [formula elementOrder] = findformula_useList_KL15(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
 %
 %
 %%%input the following variables:
@@ -77,6 +77,11 @@ function [formula elementOrder] = findformula_useList_KL12(peak_mass, peak_int, 
 %1e-6, rather than 1e6, therefore the error calculations were off by 1e-12.
 %KL 4/22/2015 - Nikola Tolic (PNNL) found an error in the formula checking
 %where we reference the wrong mass. v14 corrects that error
+%KL 4/28/2015 - Nikola Tolic found another error in how I was embedding the
+%functions. I had the 'end' in the wrong place to close out findformula and
+%as such the embedded functions were nested functions. This version
+%corrects that to make them local functions (and hence *not* able to access
+%variables outside the function).
 
 %check to be sure there are two variables going out
 if nargout~=2
@@ -101,7 +106,22 @@ elementOrder = {'C' 'H' 'O' 'N' 'C13' 'S' 'P' 'Na' 'Error'};
 relation_error = relation_error*1e-06;
 
 % initial information about the elements
-atomMasses %now this is an embedded function within findformula
+atomMasses %this can be a nested function within findformula, moved 4/28/2015
+function atomMasses
+    % initial information
+    H = 1.007825032;
+    C = 12;
+    O = 15.994914622;
+    N = 14.003074005;
+    Na = 22.989767;
+    Br = 79.904;
+    Cl = 35.4527;
+    C13 = 13.003354826;
+    N15 = 15.000108;
+    P = 30.973762;
+    S = 31.972070;
+end %end atomMasses nested function
+
 
 %change 4/15/09 to not allow the Na/H switch
 relations = [1 2 0 0 0 0 0 0; 1 4 -1 0 0 0 0 0; 0 2 0 0 0 0 0 0; ...
@@ -139,7 +159,7 @@ for p=1:f
     if peak_mass(p) < mass_limit % checks mass, if < mass_limit      
         
         if isempty(GrpdiffK(p).grpdiff) % Grpdiff is empty but mass < mass_limit; KL note - so do the brute force formula finding           
-            startform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error);
+            startform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error,sortType); %update 4/28/2015
  
             if startform(1:nElements) >= 0 %KL note: i.e. have to have positive numbers for at least some of the elements             
                 tempmass = startform*elements; % find the theoretical mass
@@ -149,7 +169,7 @@ for p=1:f
             
         elseif ~isempty(GrpdiffK(p).grpdiff) % do this if Grpdiff is not empty (have relations)
             if formula(p,1)==0 % if formula is not known...
-                startform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error);
+                startform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error,sortType); %update 4/28/2015
                                
                 if startform(1:nElements) >= 0 
                     tempmass = startform*elements; 
@@ -158,7 +178,7 @@ for p=1:f
                 end
             elseif formula(p,1) > 0 % if formula is known already...
                 %first get the brute force formula from the table
-                tempform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error);
+                tempform = useMATfile_KL4(peak_mass(p),fullCompoundList,formula_error,sortType); %update 4/28/2015
                 tempmass = tempform*elements;
                 errornew = abs((peak_mass(p)-tempmass)/tempmass*1e06);
                 
@@ -322,24 +342,10 @@ for p=1:f
     end % ends formula loop
 end % ends p loop  
 
+end %KL 4/28/2015, moved end here to make the following functions local functions
 
-%%%start the embedded functions here
-%%%start the embedded functions here
-    function atomMasses
-    % initial information
-    H = 1.007825032;
-    C = 12;
-    O = 15.994914622;
-    N = 14.003074005;
-    Na = 22.989767;
-    Br = 79.904;
-    Cl = 35.4527;
-    C13 = 13.003354826;
-    N15 = 15.000108;
-    P = 30.973762;
-    S = 31.972070;
-    end %end atomMasses embedded function
-
+%%%start the local functions here
+%%%start the local functions here
 
     function [good goodformulas] = Check7GR_KL2(formulas, mass)
     % [GOOD, GOODFORMULAS] = Check7GR(FORMULAS, MASS) where GOOD is 1 if formula adheres to rules and
@@ -521,8 +527,8 @@ end % ends p loop
     end %end Check7GR as a function
 
 
-    function elemformula = useMATfile_KL4(peak_mass, fullCompoundList, sWin)
-    %function elemformula = useMATfile_KL4(peak_mass, fullCompoundList, sWin)
+    function elemformula = useMATfile_KL4(peak_mass, fullCompoundList, sWin, sortType)
+    %function elemformula = useMATfile_KL4(peak_mass, fullCompoundList, sWin, sortType)
     %using the master list of compounds - can keep them in the array and then
     %use arrayfun to search through the different cells in sData
     %KL 12/15/08
@@ -532,6 +538,7 @@ end % ends p loop
     %heteroatoms, chose the one with the lowest error
     %KL 1/6/09 - convert elemformula to double to get the precision I need
     %KL 9/23/09 - make sure to send out elemformula as double precision
+    %KL 4/28/2015 updated with the correction to local functions
 
 
     %decide how broad the m/z range should be - using sWin
@@ -657,4 +664,4 @@ end % ends p loop
     end %end useMATfile_KL4 as function
 
     
-end %end findformula function
+%end %end findformula function %commented this out, KL 4/28/2015
