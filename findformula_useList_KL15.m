@@ -77,7 +77,7 @@ function [formula elementOrder] = findformula_useList_KL15(peak_mass, peak_int, 
 %1e-6, rather than 1e6, therefore the error calculations were off by 1e-12.
 %KL 4/22/2015 - Nikola Tolic (PNNL) found an error in the formula checking
 %where we reference the wrong mass. v14 corrects that error
-%KL 4/28/2015 - Nikola Tolic found another error in how I was embedding the
+%KL 4/28/2015 - Andrey Liyu (PNNL) found an error in how I was embedding the
 %functions. I had the 'end' in the wrong place to close out findformula and
 %as such the embedded functions were nested functions. This version
 %corrects that to make them local functions (and hence *not* able to access
