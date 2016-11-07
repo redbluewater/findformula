@@ -66,7 +66,7 @@ IUPACpeak = Peaks - H + elec; % for positive ion mode, Na-adducts are also likel
 %(LongneckerKujawinski_fullCompoundList.mat)
 fDir = 'C:\Documents and Settings\Krista\My Documents\MSdataAnalysis';
 path(path,fDir);
-load LongneckerKujawinski_fullCompoundList.mat
+load LongneckerKujawinski_fullCompoundList.2016.11.01.mat
 [formulas elementOrder] = findformula_useList_KL16(IUPACpeak, zeros(size(IUPACpeak)), 1, 20, 500,fullCompoundList,'HAcap',1);
 
 %3 Now go through and find the C13-containing formulas
