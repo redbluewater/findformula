@@ -1,5 +1,5 @@
-function [formula elementOrder] = findformula_useList_KL15(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
-%function [formula elementOrder] = findformula_useList_KL15(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
+function [formula elementOrder] = findformula_useList_KL16(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
+%function [formula elementOrder] = findformula_useList_KL16(peak_mass, peak_int, formula_error, relation_error, mass_limit,fullCompoundList,sortType,showProgress)
 %
 %
 %%%input the following variables:
