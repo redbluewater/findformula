@@ -9,7 +9,7 @@
 % file sizes. The database is available by anonymous FTP at this location:
 % ftp://ftp.whoi.edu/pub/users/klongnecker/LabFiles
 % The name of the file is: 
-%LongneckerKujawinski_fullCompoundList.2016.11.01.mat
+%LongneckerKujawinski_fullCompoundList.2016.11.21.mat
 %
 %%contact information:
 % Krista Longnecker
