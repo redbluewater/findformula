@@ -4,8 +4,9 @@
 %4/28/2105 to correct error in findformula
 %KL 11/29/2016 updating to use new database with corrected P valence 
 %and SENIOR rule
-% MATLAB changed their rules for name resolution (https://www.mathworks.com/help/matlab/matlab_prog/upgrade-code-for-r2019b-changes-to-function-precedence-order.html). This code requires MATLAB
-%versions <i>prior</i> to R2019b
+%KL 11/13/2023 
+%MATLAB changed their rules for name resolution (https://www.mathworks.com/help/matlab/matlab_prog/upgrade-code-for-r2019b-changes-to-function-precedence-order.html). 
+%This code requires MATLAB versions prior to R2019b
 %
 % NOTE: The database required to run this code exceeds GitHub's limits on
 % file sizes. The database is available by anonymous FTP at this location:
