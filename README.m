@@ -9,12 +9,8 @@
 %This code requires MATLAB versions prior to R2019b
 %
 % NOTE: The database required to run this code exceeds GitHub's limits on
-% file sizes. The database is available by anonymous FTP at this location:
-% ftp://ftp.whoi.edu/pub/users/klongnecker/LabFiles
-% The file is also available from here:
-% https://drive.google.com/file/d/1pgpMlcg63C7pZO5bWPmyDbOGPvvYC59L/view?usp=sharing
-% The name of the file is: 
-%LongneckerKujawinski_fullCompoundList.2016.11.21.mat
+% file sizes. The database is available upon request from Krista Longnecker (klongnecker@whoi.edu) or Liz Kujawinski (ekujawinski@whoi.edu)
+% The name of the file is: LongneckerKujawinski_fullCompoundList.2016.11.21.mat
 %
 %%contact information:
 % Krista Longnecker
