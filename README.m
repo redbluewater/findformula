@@ -1,30 +1,21 @@
-%Writing up the pipeline for external FTMS users
-%KLongnecker 2/25/09; edited EKujawinski 2/27/09; KLongnecker 9/2/09
-%KLongnecker 8/9/10; KLongnecker 1/24/2013; KLongnecker 7/5/2013; KL
-%4/28/2105 to correct error in findformula
-%KL 11/29/2016 updating to use new database with corrected P valence 
-%and SENIOR rule
-%KL 11/13/2023 
-%MATLAB changed their rules for name resolution (https://www.mathworks.com/help/matlab/matlab_prog/upgrade-code-for-r2019b-changes-to-function-precedence-order.html). 
-%This code requires MATLAB versions prior to R2019b
-%
-% NOTE: The database required to run this code exceeds GitHub's limits on
-% file sizes. The database is available upon request from Krista Longnecker (klongnecker@whoi.edu) or Liz Kujawinski (ekujawinski@whoi.edu)
-% The name of the file is: LongneckerKujawinski_fullCompoundList.2016.11.21.mat
-%
-%%contact information:
-% Krista Longnecker
-% Department of Marine Chemistry and Geochemistry
-% Woods Hole Oceanographic Institution
-% klongnecker@whoi.edu
+# Writing up the pipeline for external FTMS users
+## original file from 2009; updated 12 August 2024 by Krista Longnecker
+Department of Marine Chemistry and Geochemistry
+Woods Hole Oceanographic Institution
+klongnecker@whoi.edu
+
+
+MATLAB changed their rules for name resolution (https://www.mathworks.com/help/matlab/matlab_prog/upgrade-code-for-r2019b-changes-to-function-precedence-order.html). 
+This code requires MATLAB versions prior to R2019b
+
+NOTE: The database required to run this code exceeds GitHub's limits on file sizes. The database is available upon request from Liz Kujawinski (ekujawinski@whoi.edu) or can be downloaded from here https://whoi-my.sharepoint.com/:u:/r/personal/klongnecker_whoi_edu/Documents/findformula/LongneckerKujawinski_fullCompoundList.2016.11.21.mat?csf=1&web=1&e=uola23
+The name of the file is: LongneckerKujawinski_fullCompoundList.2016.11.21.mat
 
 %In the following documentation, anything which is not commented out 
 %(lines beginning with '%') is something to be entered in a Matlab command
 %window
 
-%1. Align the peaks within the desired margin of error. For the WHOI
-%instrument, we have been using 1 ppm. In the line below, the first '1'
-%indicates that the code should use a 1 ppm margin of error for the peaks.
+# Step 1. Align the peaks within the desired margin of error. For the WHOI instrument, we have been using 1 ppm. In the line below, the first '1' indicates that the code should use a 1 ppm margin of error for the peaks.
 %The second '1' instructs Matlab to show you its progress - that can be
 %changed to '0' if you don't want to have any information printed out in
 %the command window.
