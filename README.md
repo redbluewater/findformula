@@ -10,7 +10,7 @@ The database required to run this code exceeds GitHub's limits on file sizes. Th
 
 ## Step 1. 
 Align the peaks within the desired margin of error. For the WHOI instrument, we have been using 1 ppm. In the line below, the first '1' indicates that the code should use a 1 ppm margin of error for the peaks.
-The second '1' instructs Matlab to show you its progress - that can be changed to '0' if you don't want to have any information printed out in the command window.
+The second '1' instructs MATLAB to show you its progress - that can be changed to '0' if you don't want to have any information printed out in the command window.
 
 Note that code expects 'data' to be a matrix with multiple cells. There will be one cell per sample. Within each cell, there is a two column matrix. The first column is the list of m/z values in that sample and the second column is the peak heights for each m/z value. \
 ```[Peaks Intensity] = multiple_spectra_KL4(data,1,1);```
@@ -30,10 +30,10 @@ You need to pick the right conversion to neutral masses based on your ionization
 ```IUPACpeak = Peaks - H + elec; ``` %for positive ion mode, Na-adducts are also likely
 
 ### Step 2b. Call the MATLAB function
-Call the formula determination algorithm you will need to change this next line to the location of the database (LongneckerKujawinski_fullCompoundList.mat)
-'''fDir = 'C:\Documents and Settings\Krista\My Documents\MSdataAnalysis';'''\
-'''path(path,fDir);'''\
-'''load LongneckerKujawinski_fullCompoundList.2016.11.21.mat''' \
+The database must be in the path before you run the MATLAB code. This means you will need to change this next line to the location of the database (LongneckerKujawinski_fullCompoundList.mat).\
+```fDir = 'C:\Documents and Settings\Krista\My Documents\MSdataAnalysis';```\
+```path(path,fDir);```\
+```load LongneckerKujawinski_fullCompoundList.2016.11.21.mat``` 
 
 ```[formulas elementOrder] = findformula_useList_KL17(IUPACpeak, zeros(size(IUPACpeak)), 1, 20, 500,fullCompoundList,'HAcap',1);```
 
